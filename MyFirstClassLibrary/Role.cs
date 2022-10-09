@@ -1,7 +1,9 @@
 ﻿namespace MyFirstClassLibrary
 {
-    public class Role
+    public enum Role
     {
-        public int Id;
+        User,
+        Medic,
+        Admin
     }
 }
