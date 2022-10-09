@@ -21,9 +21,9 @@
             return false;
         }
 
-        public Result<User> AddUser(string login, string password)
+        public Result<User> AddUser(string phoneNumber, string fullName, string login, string password, Role role)
         {
-            User user = _repository.AddUserWithParameters(login, password);
+            User user = _repository.AddUserWithParameters(phoneNumber, fullName, login, password, role);
             return user is null ? Result.Fail<User>("Пользователь не добавлен") : Result.Ok(new User());
         }
 

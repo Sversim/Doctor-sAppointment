@@ -1,5 +1,6 @@
 using Moq;
 using MyFirstClassLibrary;
+using System.Data;
 
 namespace ClinicTests
 {
@@ -39,7 +40,7 @@ namespace ClinicTests
         [Fact]
         public void UserWasntAdded_Fail()
         {
-            var res = _userInteractor.AddUser("123", "123");
+            var res = _userInteractor.AddUser("81231234545", "Lorem Lorem", "123", "123", new Role());
 
             Assert.True(res.IsFailure);
             Assert.Equal("Пользователь не добавлен", res.Error);
