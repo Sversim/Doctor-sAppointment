@@ -2,9 +2,9 @@
 {
     public class UserInteractor
     {
-        private readonly IRepository _repository;
+        private readonly IUserRepository _repository;
 
-        public UserInteractor(IRepository repository)
+        public UserInteractor(IUserRepository repository)
         {
             _repository = repository;
         }
@@ -24,7 +24,7 @@
         public Result<User> AddUser(string phoneNumber, string fullName, string login, string password, Role role)
         {
             User user = _repository.AddUserWithParameters(phoneNumber, fullName, login, password, role);
-            return user is null ? Result.Fail<User>("Пользователь не добавлен") : Result.Ok(new User());
+            return user is null ? Result.Fail<User>("Пользователь не добавлен") : Result.Ok(user);
         }
 
         public Result<User> SearchUserWithLogin(string login)

@@ -18,10 +18,6 @@
             UserRole = userRole;
         }
 
-        public User()
-        {
-        }
-
         public bool RegistrationOfUser()
         {
             return true;
