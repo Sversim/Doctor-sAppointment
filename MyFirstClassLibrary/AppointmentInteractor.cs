@@ -12,14 +12,18 @@ namespace Domain
 
         public Result<bool> ScheduleAnAppointment(DateTime date, int? medicId=null)
         {
+            if (_repository.IsAppointmentExists(date, medicId))
+            {
+                return Result.Fail<bool>("Время уже занято");
+            }
             bool appointment = _repository.SetAppointment(date, medicId);
             return appointment ? Result.Ok(true) : Result.Fail<bool>("Запись не удалась");
         }
 
-        public Result<List<MedicsAppointment>> GetFreeTime(Specialization specialization)
+        public Result<List<DateOnly>> GetFreeTime(Specialization specialization)
         {
-            List<MedicsAppointment>? freeTime = _repository.GetFreeTimeBySpec(specialization);
-            return freeTime?.Any() ?? false ? Result.Ok(freeTime) : Result.Fail<List<MedicsAppointment>>("Ни одной даты не найдено");
+            var freeTime = _repository.GetTimeBySpec(specialization);
+            return freeTime.Any() ? Result.Ok(freeTime) : Result.Fail<List<DateOnly>>("Ни одной даты не найдено");
         }
     }
 }

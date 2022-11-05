@@ -5,7 +5,8 @@ namespace Domain
     public interface IAppointmentRepository
     {
         bool SetAppointment(DateTime date, int? medicId);
-        List<MedicsAppointment>? GetFreeTimeBySpec(Specialization specialization);
+        bool IsAppointmentExists(DateTime date, int? medicId);
+        List<DateOnly> GetTimeBySpec(Specialization specialization);
         
     }
 }
