@@ -1,6 +1,6 @@
 ﻿namespace MyFirstClassLibrary
 {
-    internal class Medic
+    public class Medic
     {
         public int Id;
         public string FullName;

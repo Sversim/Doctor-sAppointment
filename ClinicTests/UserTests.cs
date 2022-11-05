@@ -7,11 +7,11 @@ namespace ClinicTests
     public class UserTests
     {
         private readonly UserInteractor _userInteractor;
-        private readonly Mock<IRepository> _userRepositoryMock;
+        private readonly Mock<IUserRepository> _userRepositoryMock;
 
         public UserTests()
         {
-            _userRepositoryMock = new Mock<IRepository>();
+            _userRepositoryMock = new Mock<IUserRepository>();
             _userInteractor = new UserInteractor(_userRepositoryMock.Object);
         }
 
@@ -27,7 +27,6 @@ namespace ClinicTests
         [Fact]
         public void UserNotFound_Fail()
         {
-
             _userRepositoryMock.Setup(repository => repository.GetUserByLogin(It.IsAny<string>()))
             .Returns(() => null);
 

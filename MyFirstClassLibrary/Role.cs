@@ -3,7 +3,6 @@
     public enum Role
     {
         User,
-        Medic,
-        Admin
+        Admin,
     }
 }

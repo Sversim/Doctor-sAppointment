@@ -1,6 +1,6 @@
 ﻿namespace MyFirstClassLibrary
 {
-    public interface IRepository
+    public interface IUserRepository
     {
         IEnumerable<User> GetUserList();
         User? GetUserByLogin(string login);
