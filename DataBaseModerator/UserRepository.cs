@@ -4,7 +4,7 @@ namespace DataBaseModerator
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ApplicationContext _context;
+        private ApplicationContext _context;
         public UserRepository(ApplicationContext context)
         {
             _context = context;

@@ -5,7 +5,7 @@ namespace DataBaseModerator
 {
     internal class MedicRepository : IMedicRepository
     {
-        private readonly ApplicationContext _context;
+        private ApplicationContext _context;
         public MedicRepository(ApplicationContext context)
         {
             _context = context;

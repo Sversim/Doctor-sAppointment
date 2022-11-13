@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+//using Microsoft.EntityFrameworkCore.Tools;
+
 namespace DataBaseModerator
 {
     public class ApplicationContext : DbContext

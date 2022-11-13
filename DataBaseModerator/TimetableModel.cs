@@ -3,19 +3,17 @@
 namespace DataBaseModerator
 {
     [Keyless]
-    public class AppointmentModel
+    public class TimetableModel
     {
+        public int MedicId { get; set; }
         public DateTime TimeStart { get; set; }
         public DateTime TimeEnd { get; set; }
-        public int UserId { get; set; }
-        public int MedicId { get; set; }
 
-        public AppointmentModel(DateTime timeStart, DateTime timeEnd, int userId, int medicId)
+        public TimetableModel (int medicId, DateTime timeStart, DateTime timeEnd)
         {
+            MedicId = medicId;
             TimeStart = timeStart;
             TimeEnd = timeEnd;
-            UserId = userId;
-            MedicId = medicId;
         }
     }
 }
