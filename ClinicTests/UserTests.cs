@@ -1,17 +1,16 @@
 using Moq;
 using MyFirstClassLibrary;
-using System.Data;
 
 namespace ClinicTests
 {
     public class UserTests
     {
         private readonly UserInteractor _userInteractor;
-        private readonly Mock<IRepository> _userRepositoryMock;
+        private readonly Mock<IUserRepository> _userRepositoryMock;
 
         public UserTests()
         {
-            _userRepositoryMock = new Mock<IRepository>();
+            _userRepositoryMock = new Mock<IUserRepository>();
             _userInteractor = new UserInteractor(_userRepositoryMock.Object);
         }
 
@@ -27,7 +26,6 @@ namespace ClinicTests
         [Fact]
         public void UserNotFound_Fail()
         {
-
             _userRepositoryMock.Setup(repository => repository.GetUserByLogin(It.IsAny<string>()))
             .Returns(() => null);
 
@@ -40,7 +38,7 @@ namespace ClinicTests
         [Fact]
         public void UserWasntAdded_Fail()
         {
-            var res = _userInteractor.AddUser("81231234545", "Lorem Lorem", "123", "123", new Role());
+            var res = _userInteractor.AddUser(0, "81231234545", "Lorem Lorem", "123", "123", new Role());
 
             Assert.True(res.IsFailure);
             Assert.Equal("Пользователь не добавлен", res.Error);

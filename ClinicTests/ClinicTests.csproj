@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataBaseModerator\DataBaseModerator.csproj" />
     <ProjectReference Include="..\MyFirstClassLibrary\Domain.csproj" />
   </ItemGroup>
 
