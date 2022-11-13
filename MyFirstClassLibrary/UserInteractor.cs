@@ -9,8 +9,6 @@
             _repository = repository;
         }
 
-
-
         public bool IsUserExists(string login, string password)
         {
             User? desiredUser = _repository.GetUserByLogin(login);
