@@ -1,13 +1,13 @@
-﻿namespace MyFirstClassLibrary
+﻿namespace DataBaseModerator
 {
-    public class MedicsAppointment
+    public class AppointmentModel
     {
         public DateTime TimeStart;
         public DateTime TimeEnd;
         public int UserId;
         public int MedicId;
 
-        public MedicsAppointment(DateTime timeStart, DateTime timeEnd, int userId, int medicId)
+        public AppointmentModel(DateTime timeStart, DateTime timeEnd, int userId, int medicId)
         {
             TimeStart = timeStart;
             TimeEnd = timeEnd;
