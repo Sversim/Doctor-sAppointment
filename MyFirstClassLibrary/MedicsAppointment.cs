@@ -1,6 +1,6 @@
 ﻿namespace MyFirstClassLibrary
 {
-    internal class MedicsAppointment
+    public class MedicsAppointment
     {
         public DateTime TimeStart;
         public DateTime TimeEnd;

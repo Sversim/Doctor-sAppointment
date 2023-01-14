@@ -1,6 +1,6 @@
 ﻿namespace MyFirstClassLibrary
 {
-    internal class Timetable
+    public class Timetable
     {
         public int MedicId;
         public DateTime TimeStart;
