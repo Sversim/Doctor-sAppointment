@@ -17,9 +17,9 @@ namespace Domain
             return returnedTimetable is null ? Result.Fail<Timetable>("Расписание не найдено") : Result.Ok(returnedTimetable);
         }
 
-        public Result<bool> SetTimetable(int medicId, Timetable timetable)
+        public Result<bool> SetTimetable(Timetable timetable)
         {
-            return _repository.SetMedicsTimetable(medicId, timetable) ? Result.Ok(true) : Result.Fail<bool>("Расписание не установлено");
+            return _repository.SetMedicsTimetable(timetable) ? Result.Ok(true) : Result.Fail<bool>("Расписание не установлено");
         }
     }
 }

@@ -9,6 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "MyFirstClassLibra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicTests", "ClinicTests\ClinicTests.csproj", "{9E87EBAE-0B9E-4783-A3DA-120E1DD27F7C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBaseModerator", "DataBaseModerator\DataBaseModerator.csproj", "{BBB42A0E-633E-4AD0-B35D-D0371999F44E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F9B0241-93BB-4116-819B-1D29173CECCB} = {5F9B0241-93BB-4116-819B-1D29173CECCB}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +32,10 @@ Global
 		{9E87EBAE-0B9E-4783-A3DA-120E1DD27F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E87EBAE-0B9E-4783-A3DA-120E1DD27F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E87EBAE-0B9E-4783-A3DA-120E1DD27F7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBB42A0E-633E-4AD0-B35D-D0371999F44E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBB42A0E-633E-4AD0-B35D-D0371999F44E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBB42A0E-633E-4AD0-B35D-D0371999F44E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBB42A0E-633E-4AD0-B35D-D0371999F44E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

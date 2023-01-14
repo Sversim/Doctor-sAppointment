@@ -19,8 +19,8 @@ namespace ClinicTests
         [Fact]
         public void SetAppointment_Fail()
         {
-            _appointmentRepositoryMock.Setup(repository => repository.SetAppointment(It.IsAny<DateTime>(), It.IsAny<int?>())).Returns(() => false);
-            var res = _appointmentInteractor.ScheduleAnAppointment(It.IsAny<DateTime>(), It.IsAny<int?>());
+            _appointmentRepositoryMock.Setup(repository => repository.SetAppointment(It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>())).Returns(() => false);
+            var res = _appointmentInteractor.ScheduleAnAppointment(It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>());
 
             Assert.True(res.IsFailure);
         }
@@ -29,7 +29,7 @@ namespace ClinicTests
         public void AppointmentAlreadyExists_Fail()
         {
             _appointmentRepositoryMock.Setup(repository => repository.IsAppointmentExists(It.IsAny<DateTime>(), It.IsAny<int?>())).Returns(() => true);
-            var res = _appointmentInteractor.ScheduleAnAppointment(It.IsAny<DateTime>(), It.IsAny<int?>());
+            var res = _appointmentInteractor.ScheduleAnAppointment(It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>());
 
             Assert.True(res.IsFailure);
         }
@@ -37,8 +37,8 @@ namespace ClinicTests
         [Fact]
         public void SetAppointment_Ok()
         {
-            _appointmentRepositoryMock.Setup(repository => repository.SetAppointment(It.IsAny<DateTime>(), It.IsAny<int?>())).Returns(() => true);
-            var res = _appointmentInteractor.ScheduleAnAppointment(It.IsAny<DateTime>(), It.IsAny<int?>());
+            _appointmentRepositoryMock.Setup(repository => repository.SetAppointment(It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>())).Returns(() => true);
+            var res = _appointmentInteractor.ScheduleAnAppointment(It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>());
 
             Assert.True(res.Success);
         }

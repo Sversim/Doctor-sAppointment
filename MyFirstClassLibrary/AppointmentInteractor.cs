@@ -10,13 +10,13 @@ namespace Domain
             _repository = repository;
         }
 
-        public Result<bool> ScheduleAnAppointment(DateTime date, int? medicId=null)
+        public Result<bool> ScheduleAnAppointment(DateTime date, int userId, int medicId)
         {
             if (_repository.IsAppointmentExists(date, medicId))
             {
                 return Result.Fail<bool>("Время уже занято");
             }
-            bool appointment = _repository.SetAppointment(date, medicId);
+            bool appointment = _repository.SetAppointment(date, userId, medicId);
             return appointment ? Result.Ok(true) : Result.Fail<bool>("Запись не удалась");
         }
 

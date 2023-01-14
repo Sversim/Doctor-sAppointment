@@ -34,16 +34,16 @@ namespace ClinicTests
         [Fact]
         public void SetMedicsTimetable_Fail()
         {
-            _timetableRepositoryMock.Setup(repository => repository.SetMedicsTimetable(It.IsAny<int>(), It.IsAny<Timetable>())).Returns(() => false);
-            var res = _timetableInteractor.SetTimetable(It.IsAny<int>(), It.IsAny<Timetable>());
+            _timetableRepositoryMock.Setup(repository => repository.SetMedicsTimetable(It.IsAny<Timetable>())).Returns(() => false);
+            var res = _timetableInteractor.SetTimetable(It.IsAny<Timetable>());
             Assert.True(res.IsFailure);
         }
 
         [Fact]
         public void SetMedicsTimetable_Ok()
         {
-            _timetableRepositoryMock.Setup(repository => repository.SetMedicsTimetable(It.IsAny<int>(), It.IsAny<Timetable>())).Returns(() => true);
-            var res = _timetableInteractor.SetTimetable(It.IsAny<int>(), It.IsAny<Timetable>());
+            _timetableRepositoryMock.Setup(repository => repository.SetMedicsTimetable(It.IsAny<Timetable>())).Returns(() => true);
+            var res = _timetableInteractor.SetTimetable(It.IsAny<Timetable>());
             Assert.True(res.Success);
         }
     }

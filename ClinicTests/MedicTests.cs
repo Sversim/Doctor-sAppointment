@@ -20,7 +20,7 @@ namespace ClinicTests
         public void MedicAlreadyExcist_Fail()
         {
             int exampleId = 1;
-            _medicRepositoryMock.Setup(repository => repository.SearchForAMedicWithId(It.IsAny<int>())).Returns(() => new Medic());
+            _medicRepositoryMock.Setup(repository => repository.SearchForAMedicWithId(It.IsAny<int>())).Returns(() => new Medic(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()));
             var res = _medicInteractor.AddANewMedic(exampleId, "", new Specialization());
 
             Assert.True(res.IsFailure);
@@ -45,7 +45,7 @@ namespace ClinicTests
         {
             _medicRepositoryMock.Setup(repository => repository.SearchForAMedicWithId(It.IsAny<int>())).Returns(() => null);
             _medicRepositoryMock.Setup(repository => repository.AddMedicWithParameters(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<Specialization>()))
-                .Returns(() => new Medic());
+                .Returns(() => new Medic(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()));
 
             var res = _medicInteractor.AddANewMedic(1, "", new Specialization());
 
@@ -58,7 +58,7 @@ namespace ClinicTests
         {
             _medicRepositoryMock.Setup(repository => repository.SearchForAMedicWithId(It.IsAny<int>())).Returns(() => null);
             _medicRepositoryMock.Setup(repository => repository.AddMedicWithParameters(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<Specialization>()))
-                .Returns(() => new Medic());
+                .Returns(() => new Medic(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()));
 
             var res = _medicInteractor.AddANewMedic(1, "Lorem", new Specialization());
             Assert.True(res.Success);
@@ -78,7 +78,7 @@ namespace ClinicTests
         [Fact]
         public void UnexpectedErrorWithDeleting_Fail()
         {
-            _medicRepositoryMock.Setup(repository => repository.SearchForAMedicWithId(It.IsAny<int>())).Returns(() => new Medic());
+            _medicRepositoryMock.Setup(repository => repository.SearchForAMedicWithId(It.IsAny<int>())).Returns(() => new Medic(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()));
             _medicRepositoryMock.Setup(repository => repository.DeleteMedicWithId(It.IsAny<int>())).Returns(() => false);
             var res = _medicInteractor.DeleteMedic(It.IsAny<int>());
 
@@ -89,7 +89,7 @@ namespace ClinicTests
         [Fact]
         public void succesDeleting_Ok()
         {
-            _medicRepositoryMock.Setup(repository => repository.SearchForAMedicWithId(It.IsAny<int>())).Returns(() => new Medic());
+            _medicRepositoryMock.Setup(repository => repository.SearchForAMedicWithId(It.IsAny<int>())).Returns(() => new Medic(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()));
             _medicRepositoryMock.Setup(repository => repository.DeleteMedicWithId(It.IsAny<int>())).Returns(() => true);
             var res = _medicInteractor.DeleteMedic(It.IsAny<int>());
 
@@ -120,7 +120,7 @@ namespace ClinicTests
         [Fact]
         public void SearchByIdSuccess_Ok()
         {
-            _medicRepositoryMock.Setup(repository => repository.SearchForAMedicWithId(It.IsAny<int>())).Returns(() => new Medic());
+            _medicRepositoryMock.Setup(repository => repository.SearchForAMedicWithId(It.IsAny<int>())).Returns(() => new Medic(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()));
             var res = _medicInteractor.SearchForAMedic(It.IsAny<int>());
 
             Assert.True(res.Success);
@@ -129,7 +129,7 @@ namespace ClinicTests
         [Fact]
         public void SearchBySpecSuccess_Ok()
         {
-            _medicRepositoryMock.Setup(repository => repository.SearchForAMedicsWithSpecialization(It.IsAny<Specialization>())).Returns(() => new List<Medic> { new Medic() });
+            _medicRepositoryMock.Setup(repository => repository.SearchForAMedicsWithSpecialization(It.IsAny<Specialization>())).Returns(() => new List<Medic> { new Medic(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()) });
             var res = _medicInteractor.SearchForAMedic(It.IsAny<Specialization>());
 
             Assert.True(res.Success);
@@ -149,7 +149,7 @@ namespace ClinicTests
         [Fact]
         public void GetAll_Ok()
         {
-            _medicRepositoryMock.Setup(repository => repository.GetAllMedics()).Returns(() => new List<Medic> {new Medic()});
+            _medicRepositoryMock.Setup(repository => repository.GetAllMedics()).Returns(() => new List<Medic> {new Medic(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>())});
             var res = _medicInteractor.AllOfMedics();
 
             Assert.True(res.Success);

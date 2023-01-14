@@ -9,8 +9,6 @@
             _repository = repository;
         }
 
-
-
         public bool IsUserExists(string login, string password)
         {
             User? desiredUser = _repository.GetUserByLogin(login);
@@ -21,9 +19,9 @@
             return false;
         }
 
-        public Result<User> AddUser(string phoneNumber, string fullName, string login, string password, Role role)
+        public Result<User> AddUser(int id, string phoneNumber, string fullName, string login, string password, Role role)
         {
-            User user = _repository.AddUserWithParameters(phoneNumber, fullName, login, password, role);
+            User user = _repository.AddUserWithParameters(id, phoneNumber, fullName, login, password, role);
             return user is null ? Result.Fail<User>("Пользователь не добавлен") : Result.Ok(user);
         }
 
