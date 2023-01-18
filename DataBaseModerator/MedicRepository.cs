@@ -17,6 +17,13 @@ namespace DataBaseModerator
             return medic.ToDomain();
         }
 
+        public Medic? AddMedicWithParameters(int Id, string FullName, int Specialization)
+        {
+            var medic = new MedicModel(Id, FullName, Id);
+            _context.Medics.Add(medic);
+            return medic.ToDomain();
+        }
+
         public bool DeleteMedicWithId(int id)
         {
             var uselessMedic = _context.Medics.FirstOrDefault(_context.Medics.FirstOrDefault(m => m.Id == id));
