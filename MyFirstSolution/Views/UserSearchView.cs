@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using MyFirstClassLibrary;
+using System.Text.Json.Serialization;
 
 namespace MyFirstSolution.Views
 {
@@ -7,10 +8,19 @@ namespace MyFirstSolution.Views
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        /// <summary>
-        /// Логин
-        /// </summary>
+        [JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [JsonPropertyName("userName")]
+        public string Name { get; set; }
+
         [JsonPropertyName("login")]
         public string Login { get; set; }
+
+        [JsonPropertyName("password")]
+        public string Password { get; set; }
+
+        [JsonPropertyName("role")]
+        public Role UserRole { get; set; }
     }
 }

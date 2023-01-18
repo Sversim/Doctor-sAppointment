@@ -77,7 +77,7 @@ namespace MyFirstSolution.Controller
             }
 
             [HttpPost("delete_medic")]
-            public ActionResult<MedicSearchView> DeleteDoctor(int id)
+            public ActionResult<bool> DeleteDoctor(int id)
             {
                 var doctorRes = _interactor.DeleteMedic(id);
                 if (doctorRes.IsFailure)

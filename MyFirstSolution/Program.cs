@@ -18,6 +18,9 @@ builder.Services.AddTransient<MedicInteractor>();
 builder.Services.AddTransient<ITimetableRepository, TimetableRepository>();
 builder.Services.AddTransient<TimetableInteractor>();
 
+builder.Services.AddTransient<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddTransient<AppointmentInteractor>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
