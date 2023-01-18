@@ -3,7 +3,7 @@ using MyFirstClassLibrary;
 
 namespace DataBaseModerator
 {
-    internal class MedicRepository : IMedicRepository
+    public class MedicRepository : IMedicRepository
     {
         private ApplicationContext _context;
         public MedicRepository(ApplicationContext context)

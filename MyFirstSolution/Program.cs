@@ -2,6 +2,7 @@ using MyFirstClassLibrary;
 using DataBaseModerator;
 using Microsoft.EntityFrameworkCore;
 using MyFirstClassLibrary;
+using Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseNpgsql($"Host=localhost;Port=5432;Database=DoctorsBase;Username=postgres;Password=post"));
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<UserInteractor>();
+builder.Services.AddTransient<IMedicRepository, MedicRepository>();
+builder.Services.AddTransient<MedicInteractor>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
