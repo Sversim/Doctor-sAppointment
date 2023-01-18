@@ -15,12 +15,12 @@ namespace MyFirstSolution.Controller
         }
 
         [HttpGet("login")]
-        public ActionResult<UserSearchView> GetUserByLogin(string login)
+        public async Task<ActionResult<UserSearchView>> GetUserByLogin(string login)
         {
             if (login == string.Empty)
                 return Problem(statusCode: 404, detail: "Не указан логин");
 
-            var userRes = _interactor.SearchUserWithLogin(login);
+            var userRes = await _interactor.SearchUserWithLogin(login);
             if (userRes.IsFailure)
                 return Problem(statusCode: 404, detail: userRes.Error);
 
@@ -32,7 +32,7 @@ namespace MyFirstSolution.Controller
         }
 
         [HttpPost("add_user")]
-        public ActionResult<UserSearchView> AddUser(int id, string phoneNumber, string fullName, string login, string password, Role role)
+        public async Task<ActionResult<UserSearchView>> AddUser(int id, string phoneNumber, string fullName, string login, string password, Role role)
         {
             if (login == string.Empty)
                 return Problem(statusCode: 404, detail: "Не указан логин");
@@ -46,7 +46,7 @@ namespace MyFirstSolution.Controller
             if (phoneNumber == string.Empty)
                 return Problem(statusCode: 404, detail: "Не указан номер");
 
-            var userRes = _interactor.AddUser(id, phoneNumber, fullName, login, password, role);
+            var userRes = await _interactor.AddUser(id, phoneNumber, fullName, login, password, role);
             if (userRes.IsFailure)
                 return Problem(statusCode: 404, detail: userRes.Error);
 
@@ -58,14 +58,14 @@ namespace MyFirstSolution.Controller
         }
 
         [HttpGet("is_user_exist")]
-        public ActionResult<bool> IsUserExists(string login, string password)
+        public async Task<ActionResult<bool>> IsUserExists(string login, string password)
         {
             if (string.IsNullOrEmpty(login))
                 return Problem(statusCode: 404, detail: "Не указан логин");
             if (string.IsNullOrEmpty(password))
                 return Problem(statusCode: 404, detail: "Не указан пароль");
 
-            var res = _interactor.IsUserExists(login, password);
+            var res = await _interactor.IsUserExists(login, password);
             return Ok(res);
         }
     }

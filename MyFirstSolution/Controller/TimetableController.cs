@@ -15,9 +15,9 @@ namespace MyFirstSolution.Controller
         }
 
         [HttpPost("set_tt")]
-        public ActionResult<bool> AddTimetable(TimetableSearchView timetableView)
+        public async Task<ActionResult<bool>> AddTimetable(TimetableSearchView timetableView)
         {
-            var timetableRes = _interactor.SetTimetable(new Timetable(timetableView.MedicId, timetableView.Start, timetableView.End));
+            var timetableRes = await _interactor.SetTimetable(new Timetable(timetableView.MedicId, timetableView.Start, timetableView.End));
 
             if (timetableRes.IsFailure)
                 return Problem(statusCode: 404, detail: timetableRes.Error);
@@ -26,11 +26,11 @@ namespace MyFirstSolution.Controller
         }
 
         [HttpGet("get_tt")]
-        public ActionResult<TimetableSearchView> GetMedicTimetableByDate(MedicSearchView medicView, DateTime date)
+        public async Task<ActionResult<TimetableSearchView>> GetMedicTimetableByDate(MedicSearchView medicView, DateTime date)
         {
             var medic = new Medic(medicView.MedicId, medicView.MedicName, medicView.SpecializationId);
 
-            var timetableRes = _interactor.GetTimetable(medic.Id, date);
+            var timetableRes = await _interactor.GetTimetable(medic.Id, date);
 
             if (timetableRes.IsFailure)
                 return Problem(statusCode: 404, detail: timetableRes.Error);

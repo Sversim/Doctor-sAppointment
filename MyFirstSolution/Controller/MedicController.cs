@@ -18,12 +18,12 @@ namespace MyFirstSolution.Controller
 
 
         [HttpPost("create_medic")]
-        public ActionResult<MedicSearchView> AddANewMedic(MedicSearchView medicView)
+        public async Task<ActionResult<MedicSearchView>> AddANewMedic(int MedicId, string MedicName, int SpecializationId)
         {
-            if (string.IsNullOrEmpty(medicView.MedicName))
+            if (string.IsNullOrEmpty(MedicName))
                 return Problem(statusCode: 404, detail: "Не указано имя");
 
-            var medicRes = _interactor.AddANewMedic(medicView.MedicId, medicView.MedicName, medicView.SpecializationId);
+            var medicRes = await _interactor.AddANewMedic(MedicId, MedicName, SpecializationId);
             if (medicRes.IsFailure)
                 return Problem(statusCode: 404, detail: medicRes.Error);
 
@@ -38,9 +38,9 @@ namespace MyFirstSolution.Controller
         }
 
         [HttpGet("get_medic")]
-        public ActionResult<MedicSearchView> SearchForAMedic(int id)
+        public async Task<ActionResult<MedicSearchView>> SearchForAMedic(int id)
         {
-            var medicrRes = _interactor.SearchForAMedic(id);
+            var medicrRes = await _interactor.SearchForAMedic(id);
             if (medicrRes.IsFailure)
                 return Problem(statusCode: 404, detail: medicrRes.Error);
 
@@ -54,9 +54,9 @@ namespace MyFirstSolution.Controller
         }
 
         [HttpGet("get_medics_by_specialization")]
-        public ActionResult<List<MedicSearchView>> GetMedic(SpecializationSearchView specializationView)
+        public async Task<ActionResult<List<MedicSearchView>>> GetMedic(SpecializationSearchView specializationView)
         {
-            var medicsRes = _interactor.SearchForAMedic(new Specialization(specializationView.SpecializationId, specializationView.SpecializationName));
+            var medicsRes = await _interactor.SearchForAMedic(new Specialization(specializationView.SpecializationId, specializationView.SpecializationName));
 
             if (medicsRes.IsFailure)
                 return Problem(statusCode: 404, detail: medicsRes.Error);
@@ -75,9 +75,9 @@ namespace MyFirstSolution.Controller
         }
 
         [HttpPost("delete_medic")]
-        public ActionResult<bool> DeleteMedic(int id)
+        public async Task<ActionResult<bool>> DeleteMedic(int id)
         {
-            var medicRes = _interactor.DeleteMedic(id);
+            var medicRes = await _interactor.DeleteMedic(id);
             if (medicRes.IsFailure)
                 return Problem(statusCode: 404, detail: medicRes.Error);
 
@@ -85,9 +85,9 @@ namespace MyFirstSolution.Controller
         }
 
         [HttpGet("get_medic_list")]
-        public ActionResult<List<MedicSearchView>> GetMedicList()
+        public async Task<ActionResult<List<MedicSearchView>>> GetMedicList()
         {
-            var medicsRes = _interactor.AllOfMedics();
+            var medicsRes = await _interactor.AllOfMedics();
 
             if (medicsRes.IsFailure)
                 return Problem(statusCode: 404, detail: medicsRes.Error);
@@ -103,6 +103,5 @@ namespace MyFirstSolution.Controller
                 });
             return Ok(medicSearchViews);
         }
-
     }
 }

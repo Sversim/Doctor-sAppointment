@@ -4,11 +4,11 @@ namespace Domain
 {
     public interface IMedicRepository
     {
-        Medic? AddMedicWithParameters(int Id, string FullName, Specialization Specialization);
-        Medic? AddMedicWithParameters(int Id, string FullName, int Specialization);
-        List<Medic>? SearchForAMedicsWithSpecialization(Specialization specialization);
-        Medic? SearchForAMedicWithId(int id);
-        bool DeleteMedicWithId(int id);
-        List<Medic>? GetAllMedics();
+        Task<Medic?> AddMedicWithParameters(int Id, string FullName, Specialization Specialization);
+        Task<Medic?> AddMedicWithParameters(int Id, string FullName, int Specialization);
+        Task<List<Medic>?> SearchForAMedicsWithSpecialization(Specialization specialization);
+        Task<Medic?> SearchForAMedicWithId(int id);
+        Task<bool> DeleteMedicWithId(int id);
+        Task<List<Medic>?> GetAllMedics();
     }
 }

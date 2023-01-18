@@ -15,12 +15,12 @@ namespace MyFirstSolution.Controller
         }
 
         [HttpPost("save_medic_appointment")]
-        public ActionResult<bool> SaveAppointment(DateTime startTime, UserSearchView userView, MedicSearchView medicView)
+        public async Task<ActionResult<bool>> SaveAppointment(DateTime startTime, UserSearchView userView, MedicSearchView medicView)
         {
             var user = new User(userView.Id, userView.PhoneNumber, userView.Name, userView.Login, userView.Password, userView.UserRole);
             var medic = new Medic(medicView.MedicId, medicView.MedicName, medicView.SpecializationId);
 
-            var res = _interactor.ScheduleAnAppointment(startTime, user.Id, medic.Id);
+            var res = await _interactor.ScheduleAnAppointment(startTime, user.Id, medic.Id);
 
             if (res.IsFailure)
                 return Problem(statusCode: 404, detail: res.Error);
@@ -30,15 +30,14 @@ namespace MyFirstSolution.Controller
 
 
         [HttpPost("get_free_time_to_appointment")]
-        public ActionResult<List<DateOnly>> GetFreeAppointmentDateList(SpecializationSearchView specializationView)
+        public async Task<ActionResult<List<DateOnly>>> GetFreeAppointmentDateList(SpecializationSearchView specializationView)
         {
             var specialization = new Specialization(specializationView.SpecializationId, specializationView.SpecializationName);
 
-            var res = _interactor.GetFreeTime(specialization);
+            var res = await _interactor.GetFreeTime(specialization);
 
             if (res.IsFailure)
                 return Problem(statusCode: 404, detail: res.Error);
-
 
             return Ok(res.Value);
         }

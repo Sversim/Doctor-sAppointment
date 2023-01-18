@@ -11,7 +11,8 @@ namespace DataBaseModerator
         {
             _context = context;
         }
-        public List<DateOnly> GetTimeBySpec(Specialization specialization)
+
+        public async Task<List<DateOnly>> GetTimeBySpec(Specialization specialization)
         {
             var fullAppointment = _context.Appointments
                 .Join(_context.Medics,
@@ -25,14 +26,8 @@ namespace DataBaseModerator
                 day <= DateOnly.FromDateTime(DateTime.Now.Date.AddDays(7)); 
                 day = day.AddDays(1))
             {
-                // Здесь может потребоваться более продуманная логика
-                // с предварительным выбором расписания врачей по специализациям,
-                // но пока не вполне понятно, что именно требуется
                 if (fullAppointment.Where(app => DateOnly.FromDateTime(app.TimeStart) == day).Count() < 2*12)
                 {
-                    // Магические числа:
-                    // 2 - приёма в час
-                    // 12 - часов в рабочем дне
                     dates.Add(day);
                 }
                 
@@ -40,7 +35,7 @@ namespace DataBaseModerator
             return dates;
         }
 
-        public bool IsAppointmentExists(DateTime date, int? medicId)
+        public async Task<bool> IsAppointmentExists(DateTime date, int? medicId)
         {
             if (medicId is null)
             {
@@ -49,11 +44,14 @@ namespace DataBaseModerator
             return _context.Appointments.Where(t => t.TimeStart == date && t.MedicId == medicId).Any();    
         }
 
-        public bool SetAppointment(DateTime date, int userId, int medicId)
+        public async Task<bool> SetAppointment(DateTime date, int userId, int medicId)
         {
-            //...date.AddMinutes(30)... - длина приёма
-            //var id = _context.Appointments.Max(m => m.AppointmentId);
-            var model = new AppointmentModel(date, date.AddMinutes(30), userId, medicId);
+            var model = new AppointmentModel {
+                TimeStart = date,
+                TimeEnd = date.AddMinutes(30),
+                UserId = userId,
+                MedicId = medicId,
+            };
             _context.Appointments.Add(model);
             return _context.Appointments.Contains(model);
         }

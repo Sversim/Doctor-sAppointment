@@ -10,7 +10,7 @@ namespace DataBaseModerator
             _context = context;
         }
 
-        public User AddUserWithParameters(int id, string phoneNumber, string fullName, string login, string password, Role userRole)
+        public async Task<User> AddUserWithParameters(int id, string phoneNumber, string fullName, string login, string password, Role userRole)
         {
             var user = new UserModel { 
                 Id = id,
@@ -25,13 +25,13 @@ namespace DataBaseModerator
             return user.ToDomain();
         }
 
-        public User? GetUserByLogin(string login)
+        public async Task<User?> GetUserByLogin(string login)
         {
             var user = _context.Users.FirstOrDefault(u => u.Login == login);
             return user?.ToDomain();
         }
 
-        public IEnumerable<User> GetUserList()
+        public async Task<IEnumerable<User>> GetUserList()
         {
             List<User> users = new List<User>(); ;
             foreach (var user in _context.Users.ToList() ?? Enumerable.Empty<UserModel>())
