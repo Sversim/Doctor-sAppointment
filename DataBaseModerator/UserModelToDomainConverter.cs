@@ -6,7 +6,7 @@ namespace DataBaseModerator
     {
         public static User? ToDomain(this UserModel model)
         {
-            return new User(model.Id, model.Password, model.FullName, model.FullName, model.Password, model.UserRole);
+            return new User(model.Id, model.Password, model.FullName, model.Login, model.Password, model.UserRole);
         }
     }
 }

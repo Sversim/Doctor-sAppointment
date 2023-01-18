@@ -12,8 +12,16 @@ namespace DataBaseModerator
 
         public User AddUserWithParameters(int id, string phoneNumber, string fullName, string login, string password, Role userRole)
         {
-            var user = new UserModel(id, phoneNumber, fullName, login, password, userRole);
+            var user = new UserModel { 
+                Id = id,
+                PhoneNumber = phoneNumber, 
+                FullName = fullName, 
+                Login = login, 
+                Password = password, 
+                UserRole = userRole
+            };
             _context.Users.Add(user);
+            _context.SaveChanges();
             return user.ToDomain();
         }
 

@@ -3,7 +3,7 @@ using MyFirstClassLibrary;
 
 namespace DataBaseModerator
 {
-    internal class MedicRepository : IMedicRepository
+    public class MedicRepository : IMedicRepository
     {
         private ApplicationContext _context;
         public MedicRepository(ApplicationContext context)
@@ -13,6 +13,13 @@ namespace DataBaseModerator
         public Medic? AddMedicWithParameters(int Id, string FullName, Specialization Specialization)
         {
             var medic = new MedicModel(Id, FullName, Specialization.Id);
+            _context.Medics.Add(medic);
+            return medic.ToDomain();
+        }
+
+        public Medic? AddMedicWithParameters(int Id, string FullName, int Specialization)
+        {
+            var medic = new MedicModel(Id, FullName, Id);
             _context.Medics.Add(medic);
             return medic.ToDomain();
         }

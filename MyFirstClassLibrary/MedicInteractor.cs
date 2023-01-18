@@ -25,6 +25,20 @@ namespace Domain
             return medic is null ? Result.Fail<Medic>("Врач не добавлен") : Result.Ok(medic);
         }
 
+        public Result<Medic> AddANewMedic(int id, string fullName, int specialization)
+        {
+            if (_repository.SearchForAMedicWithId(id) is not null)
+            {
+                return Result.Fail<Medic>("Врач с таким идентификатором уже существует");
+            }
+            if (string.IsNullOrEmpty(fullName))
+            {
+                return Result.Fail<Medic>("Имя не должно быть пустым");
+            }
+            Medic? medic = _repository.AddMedicWithParameters(id, fullName, specialization);
+            return medic is null ? Result.Fail<Medic>("Врач не добавлен") : Result.Ok(medic);
+        }
+
         public Result<bool> DeleteMedic(int id)
         {
             if (_repository.SearchForAMedicWithId(id) is null)
