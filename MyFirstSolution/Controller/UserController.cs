@@ -56,5 +56,17 @@ namespace MyFirstSolution.Controller
                 Login = userRes.Value.Login
             });
         }
+
+        [HttpGet("is_user_exist")]
+        public ActionResult<bool> IsUserExists(string login, string password)
+        {
+            if (string.IsNullOrEmpty(login))
+                return Problem(statusCode: 404, detail: "Не указан логин");
+            if (string.IsNullOrEmpty(password))
+                return Problem(statusCode: 404, detail: "Не указан пароль");
+
+            var res = _interactor.IsUserExists(login, password);
+            return Ok(res);
+        }
     }
 }
