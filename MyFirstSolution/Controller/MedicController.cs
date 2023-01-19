@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyFirstClassLibrary;
 using MyFirstSolution.Views;
@@ -16,7 +17,7 @@ namespace MyFirstSolution.Controller
             _interactor = interactor;
         }
 
-
+        [Authorize]
         [HttpPost("create_medic")]
         public async Task<ActionResult<MedicSearchView>> AddANewMedic(int MedicId, string MedicName, int SpecializationId)
         {
@@ -74,6 +75,8 @@ namespace MyFirstSolution.Controller
             return Ok(medicSearchViews);
         }
 
+
+        [Authorize]
         [HttpPost("delete_medic")]
         public async Task<ActionResult<bool>> DeleteMedic(int id)
         {

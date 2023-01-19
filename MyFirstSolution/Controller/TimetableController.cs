@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyFirstClassLibrary;
 using MyFirstSolution.Views;
@@ -14,6 +15,7 @@ namespace MyFirstSolution.Controller
             _interactor = interactor;
         }
 
+        [Authorize]
         [HttpPost("set_tt")]
         public async Task<ActionResult<bool>> AddTimetable(TimetableSearchView timetableView)
         {

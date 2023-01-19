@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyFirstClassLibrary;
 using MyFirstSolution.Views;
@@ -14,6 +15,7 @@ namespace MyFirstSolution.Controller
             _interactor = interactor;
         }
 
+        [Authorize]
         [HttpPost("save_medic_appointment")]
         public async Task<ActionResult<bool>> SaveAppointment(DateTime startTime, UserSearchView userView, MedicSearchView medicView)
         {
@@ -28,7 +30,7 @@ namespace MyFirstSolution.Controller
             return Ok(res);
         }
 
-
+        [Authorize]
         [HttpPost("get_free_time_to_appointment")]
         public async Task<ActionResult<List<DateOnly>>> GetFreeAppointmentDateList(SpecializationSearchView specializationView)
         {

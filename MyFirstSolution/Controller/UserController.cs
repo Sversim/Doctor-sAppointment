@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using MyFirstClassLibrary;
 using MyFirstSolution.Views;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace MyFirstSolution.Controller
 {
@@ -12,6 +16,52 @@ namespace MyFirstSolution.Controller
         public UserController(UserInteractor interactor)
         {
             _interactor = interactor;
+        }
+
+        [HttpPost("/token")]
+        public async Task<IActionResult> Token(string login, string password)
+        {
+            var identity = await GetIdentity(login, password);
+            if (identity == null)
+            {
+                return BadRequest(new { errorText = "Пользователя с указанными данными не существует" });
+            }
+
+            var now = DateTime.UtcNow;
+            var jwt = new JwtSecurityToken(
+                    issuer: AuthorOptions.ISSUER,
+            audience: AuthorOptions.AUDIENCE,
+            notBefore: now,
+            claims: identity.Claims,
+            expires: now.Add(TimeSpan.FromMinutes(AuthorOptions.LIFETIME)),
+                    signingCredentials: new SigningCredentials(AuthorOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            var response = new
+            {
+                access_token = encodedJwt,
+                username = login,
+            };
+            return new JsonResult(response);
+        }
+
+        private async Task<ClaimsIdentity> GetIdentity(string login, string password)
+        {
+            var person = await _interactor.SearchUserWithLogin(login);
+            if (person != null && person.Value.Password == password)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, person.Value.Login),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Value.Password)
+                };
+                ClaimsIdentity claimsIdentity =
+                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                    ClaimsIdentity.DefaultRoleClaimType);
+                return claimsIdentity;
+            }
+
+            return null;
         }
 
         [HttpGet("login")]
@@ -31,6 +81,7 @@ namespace MyFirstSolution.Controller
             });
         }
 
+        [Authorize]
         [HttpPost("add_user")]
         public async Task<ActionResult<UserSearchView>> AddUser(int id, string phoneNumber, string fullName, string login, string password, Role role)
         {
