@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 using MyFirstClassLibrary;
 
 namespace DataBaseModerator
@@ -17,8 +18,8 @@ namespace DataBaseModerator
                 FullName = FullName,
                 Specialization = Specialization.Id
             };
-            _context.Medics.Add(medic);
-            _context.SaveChanges();
+            await _context.Medics.AddAsync(medic);
+            await _context.SaveChangesAsync();
             return medic.ToDomain();
         }
 
@@ -30,15 +31,17 @@ namespace DataBaseModerator
                 FullName = FullName,
                 Specialization = Specialization
             };
-            _context.Medics.Add(medic);
-            _context.SaveChanges();
+            await _context.Medics.AddAsync(medic);
+            await _context.SaveChangesAsync();
             return medic.ToDomain();
         }
 
         public async Task<bool> DeleteMedicWithId(int id)
         {
-            var uselessMedic = _context.Medics.FirstOrDefault(_context.Medics.FirstOrDefault(m => m.Id == id));
-            _context.Medics.Remove(_context.Medics.FirstOrDefault(_context.Medics.FirstOrDefault(m => m.Id == id)));
+            var uselessMedic = await _context.Medics.FirstOrDefaultAsync(m => m.Id == id);
+            _context.Medics.Remove(uselessMedic);
+            await _context.SaveChangesAsync();
+
             return uselessMedic != null;
         }
 

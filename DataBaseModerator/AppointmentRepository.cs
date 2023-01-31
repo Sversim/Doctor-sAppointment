@@ -52,8 +52,8 @@ namespace DataBaseModerator
                 UserId = userId,
                 MedicId = medicId,
             };
-            _context.Appointments.Add(model);
-            return _context.Appointments.Contains(model);
+            await _context.Appointments.AddAsync(model);
+            return await _context.Appointments.ContainsAsync(model);
         }
     }
 }

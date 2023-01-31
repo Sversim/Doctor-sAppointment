@@ -1,4 +1,5 @@
-﻿using MyFirstClassLibrary;
+﻿using Microsoft.EntityFrameworkCore;
+using MyFirstClassLibrary;
 
 namespace DataBaseModerator
 {
@@ -20,14 +21,14 @@ namespace DataBaseModerator
                 Password = password, 
                 UserRole = userRole
             };
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
             return user.ToDomain();
         }
 
         public async Task<User?> GetUserByLogin(string login)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Login == login);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == login);
             return user?.ToDomain();
         }
 
