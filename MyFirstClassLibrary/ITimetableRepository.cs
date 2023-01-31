@@ -4,7 +4,7 @@ namespace Domain
 {
     public interface ITimetableRepository
     {
-        Timetable? GetMedicsTimetable(int medicId, DateTime date);
-        bool SetMedicsTimetable(Timetable timetable);
+        Task<Timetable?> GetMedicsTimetable(int medicId, DateTime date);
+        Task<bool> SetMedicsTimetable(Timetable timetable);
     }
 }

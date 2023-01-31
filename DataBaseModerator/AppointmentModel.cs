@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataBaseModerator
 {
@@ -9,13 +10,5 @@ namespace DataBaseModerator
         public DateTime TimeEnd { get; set; }
         public int UserId { get; set; }
         public int MedicId { get; set; }
-
-        public AppointmentModel(DateTime timeStart, DateTime timeEnd, int userId, int medicId)
-        {
-            TimeStart = timeStart;
-            TimeEnd = timeEnd;
-            UserId = userId;
-            MedicId = medicId;
-        }
     }
 }

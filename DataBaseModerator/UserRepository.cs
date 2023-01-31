@@ -1,4 +1,5 @@
-﻿using MyFirstClassLibrary;
+﻿using Microsoft.EntityFrameworkCore;
+using MyFirstClassLibrary;
 
 namespace DataBaseModerator
 {
@@ -10,20 +11,28 @@ namespace DataBaseModerator
             _context = context;
         }
 
-        public User AddUserWithParameters(int id, string phoneNumber, string fullName, string login, string password, Role userRole)
+        public async Task<User> AddUserWithParameters(int id, string phoneNumber, string fullName, string login, string password, Role userRole)
         {
-            var user = new UserModel(id, phoneNumber, fullName, login, password, userRole);
-            _context.Users.Add(user);
+            var user = new UserModel { 
+                Id = id,
+                PhoneNumber = phoneNumber, 
+                FullName = fullName, 
+                Login = login, 
+                Password = password, 
+                UserRole = userRole
+            };
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
             return user.ToDomain();
         }
 
-        public User? GetUserByLogin(string login)
+        public async Task<User?> GetUserByLogin(string login)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Login == login);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == login);
             return user?.ToDomain();
         }
 
-        public IEnumerable<User> GetUserList()
+        public async Task<IEnumerable<User>> GetUserList()
         {
             List<User> users = new List<User>(); ;
             foreach (var user in _context.Users.ToList() ?? Enumerable.Empty<UserModel>())

@@ -1,30 +1,51 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 using MyFirstClassLibrary;
 
 namespace DataBaseModerator
 {
-    internal class MedicRepository : IMedicRepository
+    public class MedicRepository : IMedicRepository
     {
         private ApplicationContext _context;
         public MedicRepository(ApplicationContext context)
         {
             _context = context;
         }
-        public Medic? AddMedicWithParameters(int Id, string FullName, Specialization Specialization)
+        public async Task<Medic> AddMedicWithParameters(int Id, string FullName, Specialization Specialization)
         {
-            var medic = new MedicModel(Id, FullName, Specialization.Id);
-            _context.Medics.Add(medic);
+            var medic = new MedicModel{
+                Id = Id, 
+                FullName = FullName,
+                Specialization = Specialization.Id
+            };
+            await _context.Medics.AddAsync(medic);
+            await _context.SaveChangesAsync();
             return medic.ToDomain();
         }
 
-        public bool DeleteMedicWithId(int id)
+        public async Task<Medic> AddMedicWithParameters(int Id, string FullName, int Specialization)
         {
-            var uselessMedic = _context.Medics.FirstOrDefault(_context.Medics.FirstOrDefault(m => m.Id == id));
-            _context.Medics.Remove(_context.Medics.FirstOrDefault(_context.Medics.FirstOrDefault(m => m.Id == id)));
+            var medic = new MedicModel
+            {
+                Id = Id,
+                FullName = FullName,
+                Specialization = Specialization
+            };
+            await _context.Medics.AddAsync(medic);
+            await _context.SaveChangesAsync();
+            return medic.ToDomain();
+        }
+
+        public async Task<bool> DeleteMedicWithId(int id)
+        {
+            var uselessMedic = await _context.Medics.FirstOrDefaultAsync(m => m.Id == id);
+            _context.Medics.Remove(uselessMedic);
+            await _context.SaveChangesAsync();
+
             return uselessMedic != null;
         }
 
-        public List<Medic>? GetAllMedics()
+        public async Task<List<Medic>?> GetAllMedics()
         {
             List<Medic> medics = new List<Medic>();
             foreach (var medic in _context.Medics.ToList() ?? Enumerable.Empty<MedicModel>())
@@ -34,7 +55,7 @@ namespace DataBaseModerator
             return medics;
         }
 
-        public List<Medic>? SearchForAMedicsWithSpecialization(Specialization specialization)
+        public async Task<List<Medic>?> SearchForAMedicsWithSpecialization(Specialization specialization)
         {
             List<Medic> medics = new List<Medic>();
             var searchedScecializationList = _context.Medics.Where(m => m.Id == specialization.Id);
@@ -45,7 +66,7 @@ namespace DataBaseModerator
             return medics;
         }
 
-        public Medic? SearchForAMedicWithId(int id)
+        public async Task<Medic?> SearchForAMedicWithId(int id)
         {
             var medic = _context.Medics.FirstOrDefault(_context.Medics.FirstOrDefault(m => m.Id == id));
             return medic != null ? medic.ToDomain() : null;

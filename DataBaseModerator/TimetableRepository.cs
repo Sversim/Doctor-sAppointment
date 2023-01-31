@@ -11,18 +11,18 @@ namespace DataBaseModerator
         {
             _context = context;
         }
-        public Timetable? GetMedicsTimetable(int medicId, DateTime date)
+        public async Task<Timetable?> GetMedicsTimetable(int medicId, DateTime date)
         {
-            var timetable = _context.Timetables.First(m => m.MedicId == medicId 
+            var timetable = await _context.Timetables.FirstAsync(m => m.MedicId == medicId 
                 && DateOnly.FromDateTime(date) == DateOnly.FromDateTime(m.TimeStart));
             return timetable.ToDomain();
         }
 
-        public bool SetMedicsTimetable(Timetable timetable)
+        public async Task<bool> SetMedicsTimetable(Timetable timetable)
         {
             var ttToInsert = new TimetableModel(timetable.MedicId, timetable.TimeStart, timetable.TimeEnd);
-            _context.Timetables.Add(ttToInsert);
-            return _context.Timetables.Contains(ttToInsert);
+            await _context.Timetables.AddAsync(ttToInsert);
+            return await _context.Timetables.ContainsAsync(ttToInsert);
         }
     }
 }
